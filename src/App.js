@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from 'react-router-dom'
+import './App.css'
+import Banner from './components/Banner'
+import DefaultLayout from './components/DefaultLayout'
+import DetailProduct from './pages/DetailProduct'
+import ListProduct from './pages/ListProduct'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Routes>
+      <Route
+        path='/'
+        element={
+          <DefaultLayout>
+            <Banner />
+          </DefaultLayout>
+        }
+      />
+      <Route
+        path='/:key/:id'
+        element={
+          <DefaultLayout>
+            <ListProduct />
+          </DefaultLayout>
+        }
+      />
+      <Route
+        path='/chitiet/:name'
+        element={
+          <DefaultLayout>
+            <DetailProduct />
+          </DefaultLayout>
+        }
+      />
+      <Route
+        path='*'
+        element={<div className='flex items-center justify-center text-[30px] font-bold text-black'>NotFound</div>}
+      />
+    </Routes>
+  )
 }
 
-export default App;
+export default App
