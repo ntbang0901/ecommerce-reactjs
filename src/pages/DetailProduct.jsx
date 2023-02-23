@@ -10,6 +10,7 @@ function DetailProduct() {
   const [product, setProduct] = useState(null)
   const [infoSeller, setInfoSeller] = useState(null)
   const [showMoreDesc, setShowMoreDesc] = useState(false)
+  const [currentImage, setCurrentImage] = useState(null)
   const queryClient = useQueryClient()
 
   const { spid } = useQuerString()
@@ -17,8 +18,6 @@ function DetailProduct() {
   const string = params.name.split('-p')
 
   const sp_id = string[string.length - 1].slice(0, -5)
-
-  console.log(sp_id)
 
   const productQuery = useQuery({
     queryKey: ['productDetail', sp_id],
@@ -44,31 +43,38 @@ function DetailProduct() {
     return <div className='flex  w-screen items-center justify-center text-2xl text-black'>Loading.....</div>
 
   return (
-    <div className='text-black  md:container lg:mx-[200px]'>
-      <div className='mt-3 flex flex-col gap-4 bg-white md:flex-row'>
+    <div className='m-[auto] text-black lg:container'>
+      <div className='mt-3 flex flex-col gap-4 bg-white lg:flex-row'>
         <div className='flex flex-col items-center justify-center p-3 md:basis-1/3'>
-          <img className='cursor-pointer' width={444} height={444} src={product?.thumbnail_url} alt='aaa' />
-          <div className='mt-3 grid hidden w-[444px] grid-cols-5  gap-3 md:grid'>
+          <img
+            className='h-[444px] w-[444px] cursor-pointer '
+            width={444}
+            height={444}
+            src={!currentImage ? product?.thumbnail_url : currentImage}
+            alt='aaa'
+          />
+          <div className='mt-3 hidden w-[444px] grid-cols-5  gap-3 md:grid'>
             {product?.images.slice(0, 4).map((image) => (
-              <img key={image.thumbnail_url} src={image.thumbnail_url} alt={product?.name} />
+              <img
+                onClick={() => setCurrentImage(image.thumbnail_url)}
+                key={image.thumbnail_url}
+                className='cursor-pointer'
+                src={image.thumbnail_url}
+                alt={product?.name}
+              />
             ))}
-            <div className='flex items-center text-[11px]'>
-              <span className='px-4 text-center'> xem thêm {product?.images.length - 4} ảnh</span>
-            </div>
-          </div>
-          <div className='hidden md:block'>
-            <p>Chia sẽ nhận xu </p>
-            <img
-              src='https://salt.tikicdn.com/cache/750x750/ts/product/17/a4/8c/fa2f565ad5baf30b9e39f3dca142d8fb.jpg.webp'
-              alt='aaa'
-            />
+            {product?.images.length > 5 && (
+              <div className='flex cursor-pointer items-center text-[11px] '>
+                <span className='px-4 text-center'> xem thêm {product?.images.length - 4} ảnh</span>
+              </div>
+            )}
           </div>
         </div>
-        <div className='py-4 px-3 md:basis-2/3 '>
+        <div className='py-4 px-3 '>
           <div>
             {product?.brand && <p className='text-sm'>Thương hiệu : {product?.brand?.name}</p>}
             <span className='text-2xl'>{product?.name}</span>
-            <div className='flex gap-2'>
+            <div className='flex items-center gap-2 '>
               <div>
                 <div className='flex'>
                   <span>{product?.rating_average}</span>
@@ -79,24 +85,12 @@ function DetailProduct() {
               <span>{product?.quantity_sold.text}</span>
             </div>
           </div>
-          <div className='flex flex-col xl:flex-row '>
-            <div className='space-y-5 lg:basis-2/3'>
+          <div className='flex flex-col justify-between gap-5'>
+            <div className='space-y-5'>
               <div className='flex items-center space-x-2 md:block'>
                 <span className='text-[32px] font-semibold text-[#ff424e]'>{product?.price} đ</span>
                 <span className='text-[14px]  line-through'>{product?.original_price} đ</span>
                 <span className='border-[1px] border-[#ff424e] bg-[#ff424e]/20 text-[#ff3845]'>-{discount}%</span>
-              </div>
-              <div>
-                <button className=''>
-                  <a
-                    className=' block rounded-md bg-[#ff3845]  px-12 py-3 text-center text-lg font-semibold text-white'
-                    href='https://www.facebook.com'
-                    target='_blank'
-                    rel='noreferrer'
-                  >
-                    Mua ngay
-                  </a>
-                </button>
               </div>
             </div>
             <div className='p-4 shadow-md'>
@@ -108,14 +102,14 @@ function DetailProduct() {
                 <div className='flex items-center gap-4'>
                   {infoSeller?.info.map((item) => (
                     <div key={item.type} className='flex flex-col  items-center justify-center'>
-                      <span>{item.type === 'review' ? item.title + ' sao' : item.title}</span>
+                      <span className='font-semibold'>{item.type === 'review' ? item.title + ' sao' : item.title}</span>
                       <span className='text-[14px]'>
                         {item.type === 'review' ? item.sub_title + ' đánh giá' : item.sub_title}
                       </span>
                     </div>
                   ))}
                 </div>
-                <div className='flex items-center  justify-center gap-4'>
+                <div className='flex items-center justify-center  gap-4 sm:hidden'>
                   <div className='flex items-center justify-center'>
                     <button className='rounded-sm border-[1px] border-[#3e96ff] px-2 py-1 text-sm text-[#3e96ff]'>
                       Xem shop
@@ -128,6 +122,18 @@ function DetailProduct() {
                   </div>
                 </div>
               </div>
+            </div>
+            <div>
+              <button className=''>
+                <a
+                  className=' block rounded-md bg-[#ff3845]  px-12 py-3 text-center text-lg font-semibold text-white'
+                  href={product?.short_url}
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  Đi đến trang chính
+                </a>
+              </button>
             </div>
           </div>
         </div>

@@ -51,7 +51,7 @@ function FilterSideBarMobile({ serviceFilter, dataFilter, handleSelectFilter }) 
                     onClick={() => handleSelectFilter(item, index)}
                     key={item.display_name}
                     className={`flex h-full w-full cursor-pointer flex-col items-center justify-center ${
-                      !item?.status ? 'bg-gray-200/50' : 'bg-black/50'
+                      !item?.values[0]?.selected ? 'bg-gray-200/50' : 'bg-black/50'
                     } p-3 text-center`}
                   >
                     {item.icon && <img className=' object-fit max-w-[70px]' src={item.icon} alt={item.display_name} />}
@@ -73,7 +73,7 @@ function FilterSideBarMobile({ serviceFilter, dataFilter, handleSelectFilter }) 
                           onClick={() => handleSelectFilter(itemValue, indexValue)}
                           key={itemValue.display_value}
                           className={`flex h-full w-full cursor-pointer flex-col items-center justify-center ${
-                            !itemValue?.status ? 'bg-gray-200/50' : 'bg-black/50'
+                            !itemValue.selected ? 'bg-gray-200/50' : 'bg-black/50'
                           } p-3 text-center`}
                         >
                           <span>{itemValue.display_value}</span>

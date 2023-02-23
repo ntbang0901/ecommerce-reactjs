@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 function ProductItem({ item }) {
-  console.log(item)
   return (
     <Link
       to={`/chitiet/${item.url_path.replace('/', '-')}`}

@@ -1,12 +1,13 @@
 import axios from 'axios'
 const http = require('~/utils/http')
 
-export const getProducts = (category, page, limit, urlKey) =>
+export const getProducts = (category, page, limit, urlKey, params) =>
   axios.get('https://tiki.vn/api/personalish/v1/blocks/listings?include=advertisement&is_mweb=1&aggregations=2', {
     params: {
       limit,
       page,
       urlKey,
+      ...params,
       category,
       categoryId: category
     }

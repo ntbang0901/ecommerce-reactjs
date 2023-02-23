@@ -11,6 +11,7 @@ function Banner() {
     queryKey: ['categories'],
     queryFn: () => getCategories(),
     onSuccess: (data) => {
+      console.log(data)
       setMenu(data?.data.menu_block.items)
     }
   })

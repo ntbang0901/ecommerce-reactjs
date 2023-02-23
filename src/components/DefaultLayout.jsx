@@ -5,7 +5,7 @@ import Header from '~/components/Header'
 
 function DefaultLayout({ children }) {
   return (
-    <div className='relative h-[140vh] '>
+    <div className='relative h-[140vh] overflow-x-hidden '>
       <Header />
       <main className='mt-[100px] h-screen w-screen '>{children}</main>
     </div>

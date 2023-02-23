@@ -4,6 +4,7 @@ import Banner from './components/Banner'
 import DefaultLayout from './components/DefaultLayout'
 import DetailProduct from './pages/DetailProduct'
 import ListProduct from './pages/ListProduct'
+import SearchResult from './pages/SearchResult'
 
 function App() {
   return (
@@ -21,6 +22,14 @@ function App() {
         element={
           <DefaultLayout>
             <ListProduct />
+          </DefaultLayout>
+        }
+      />
+      <Route
+        path='/search'
+        element={
+          <DefaultLayout>
+            <SearchResult />
           </DefaultLayout>
         }
       />

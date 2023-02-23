@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import SearchBox from './SearchBox'
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -27,13 +28,7 @@ function Header() {
             alt='logo'
           />
         </Link>
-        <div className='flex w-[75%] items-center justify-center'>
-          <input
-            className=' w-full rounded-md border px-2 py-2 text-black outline-blue-400 md:w-[75%]'
-            type='text'
-            placeholder='Tìm cái gì'
-          />
-        </div>
+        <SearchBox />
       </div>
     </header>
   )

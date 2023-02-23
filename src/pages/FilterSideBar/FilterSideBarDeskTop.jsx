@@ -10,7 +10,7 @@ function FilterSideBarDeskTop({ serviceFilter, dataFilter, handleSelectFilter, h
               onClick={() => handleSelectFilter(item, index)}
               className='my-1 flex cursor-pointer items-start  gap-2'
             >
-              {!item.status ? (
+              {!item?.values[0]?.selected ? (
                 <img
                   src='https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/unchecked.svg'
                   alt='checkbox'
@@ -40,14 +40,14 @@ function FilterSideBarDeskTop({ serviceFilter, dataFilter, handleSelectFilter, h
                     <div
                       key={item.query_name + value.display_value}
                       className='my-1 flex cursor-pointer items-start  gap-2'
-                      onClick={() => handleSelectFilter(value, indexVlaue)}
+                      onClick={() => handleSelectFilter(item, indexVlaue)}
                     >
                       {item.query_name === 'price' || item.query_name === 'rating' ? (
                         ''
                       ) : (
                         <img
                           src={
-                            !value.status
+                            !value.selected
                               ? 'https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/unchecked.svg'
                               : 'https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/checked.svg'
                           }
