@@ -3,9 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
 import { getCategories } from '~/apis/category.api'
+import Loading from './Loading'
 
 function Banner() {
   const [menu, setMenu] = useState([])
+
+  document.title = `Tinder. - Home`
 
   const { data, isLoading } = useQuery({
     queryKey: ['categories'],
@@ -16,8 +19,7 @@ function Banner() {
     }
   })
 
-  if (isLoading)
-    return <div className='flex  w-screen items-center justify-center text-2xl text-black'>Loading.....</div>
+  if (isLoading) return <Loading />
   return (
     <div className='p-2 font-semibold text-[#141414] md:p-10'>
       <h2 className='mb-5 text-2xl'>{menu.title}</h2>

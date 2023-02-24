@@ -51,8 +51,8 @@ function SearchBox() {
 
   const handleSearch = (keyword) => {
     if (keyword) {
-      navigate(`/search?q=${keyword}`)
-      setText(keyword)
+      navigate(`/search?q=${keyword.keyword}`)
+      setText(keyword.keyword)
     } else {
       navigate(`/search?q=${text}`)
     }
@@ -90,7 +90,11 @@ function SearchBox() {
           className='absolute top-[50px] flex w-[75%] flex-col bg-white p-2 text-black shadow-md '
         >
           {keyWords.data?.slice(0, showMore ? keyWords.data?.length : 3).map((keyword) => (
-            <div onClick={() => handleSearch(keyword)} className='flex cursor-pointer hover:bg-slate-200'>
+            <div
+              key={keyword.keyword}
+              onClick={() => handleSearch(keyword)}
+              className='flex cursor-pointer hover:bg-slate-200'
+            >
               <div className='flex items-center'>
                 {keyword.type === 'history' && (
                   <img
@@ -118,7 +122,7 @@ function SearchBox() {
               </div>
             </div>
           ))}
-          <button onClick={() => setShowmore(!showMore)} className='flex items-center justify-center'>
+          <button type='submit' onClick={() => setShowmore(!showMore)} className='flex items-center justify-center'>
             <span className='text-sm text-blue-400'>{!showMore ? 'Xêm thêm' : 'Thu gọn'}</span>
             <img color='##449cf1' src={!showMore ? '/images/arrowDown.svg' : '/images/arrowUp.svg'} alt='arrowDown' />
           </button>
@@ -131,7 +135,11 @@ function SearchBox() {
                     <div className='grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3'>
                       {item.items.map((value) => {
                         return (
-                          <div onClick={() => searchWithMenu(value)} className='flex items-center gap-2'>
+                          <div
+                            key={value.thumbnail_url}
+                            onClick={() => searchWithMenu(value)}
+                            className='flex items-center gap-2'
+                          >
                             <img className='h-[70px] w-[70px]' src={value.thumbnail_url} alt={value.title} />
                             <span className='text-[12px]'>{value.title ? value.title : value.name}</span>
                           </div>

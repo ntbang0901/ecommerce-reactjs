@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { getCategoryFilter, getProducts } from '~/apis/product.api'
+import Loading from '~/components/Loading'
 import ProductItem from '~/components/ProductItem'
 import Products from '~/components/Products'
 import useQuerString from '~/hooks/useQuerString'
@@ -84,8 +85,7 @@ function ListProduct() {
     setDataFilter([...dataFilter])
   }
 
-  if (productsQuery.isLoading)
-    return <div className='flex  w-screen items-center justify-center text-2xl text-black'>Loading.....</div>
+  if (productsQuery.isLoading) return <Loading />
 
   return (
     <Products

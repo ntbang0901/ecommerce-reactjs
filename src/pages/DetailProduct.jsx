@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import purify from 'dompurify'
 import { getInfoSeller, getProduct } from '~/apis/product.api'
 import useQuerString from '~/hooks/useQuerString'
+import Loading from '~/components/Loading'
 
 function DetailProduct() {
   const params = useParams()
@@ -18,6 +19,8 @@ function DetailProduct() {
   const string = params.name.split('-p')
 
   const sp_id = string[string.length - 1].slice(0, -5)
+
+  document.title = `Tinder. - Chi tiết sản phẩm`
 
   const productQuery = useQuery({
     queryKey: ['productDetail', sp_id],
@@ -39,8 +42,7 @@ function DetailProduct() {
 
   const discount = Math.floor(((product?.original_price - product?.price) / product?.original_price) * 100)
 
-  if (infoSellerQuery.isLoading)
-    return <div className='flex  w-screen items-center justify-center text-2xl text-black'>Loading.....</div>
+  if (infoSellerQuery.isLoading) return <Loading />
 
   return (
     <div className='m-[auto] text-black lg:container'>
@@ -82,7 +84,7 @@ function DetailProduct() {
                 </div>
               </div>
               <span>(Xem {product?.review_count} đánh giá)</span>
-              <span>{product?.quantity_sold.text}</span>
+              <span>{product?.quantity_sold?.text}</span>
             </div>
           </div>
           <div className='flex flex-col justify-between gap-5'>

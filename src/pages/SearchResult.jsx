@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 import { useLocation, useParams } from 'react-router-dom'
 import { searchApi } from '~/apis/search.api'
+import Loading from '~/components/Loading'
 import Products from '~/components/Products'
 import useQuerString from '~/hooks/useQuerString'
 
@@ -14,8 +15,13 @@ function SearchResult() {
 
   const location = useLocation()
   const queryString = useQuerString()
+  console.log(location)
   const { q } = queryString
   const page = Number(queryString.page) || 1
+
+  document.title = `Kết quả tìm kiếm với ${q}`
+
+  const path = location.pathname + `?q=${q}`
 
   const searchQuery = useQuery({
     queryKey: ['search', page, q, params],
@@ -30,8 +36,7 @@ function SearchResult() {
     }
   })
 
-  if (searchQuery.isLoading)
-    return <div className='flex  w-screen items-center justify-center text-2xl text-black'>Loading.....</div>
+  if (searchQuery.isLoading) return <Loading />
 
   return (
     <div>
@@ -42,6 +47,7 @@ function SearchResult() {
         paging={paging}
         setParams={setParams}
         params={params}
+        path={path}
       />
     </div>
   )
